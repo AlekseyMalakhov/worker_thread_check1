@@ -2,17 +2,22 @@ import workerpool from "workerpool";
 import os from "os";
 const pool = workerpool.pool();
 
+//get the number of threads for current CPU
 const numberOfThreads = os.cpus().length;
 //console.log("numberOfThreads:", numberOfThreads);
 
+//we will use all threads - 2. Leave some free threads just in case
 const numberOfThreadsWeUse = numberOfThreads - 2;
 console.log("numberOfThreadsWeUse:", numberOfThreadsWeUse);
 
+//initial data for a problem
 const initialValue = 100000000000;
 
+//amount of problem per thread
 const portionPerThread = Math.floor(initialValue / numberOfThreadsWeUse);
 console.log("portionPerThread:", portionPerThread);
 
+//initial data for every thread
 const valuesForTasks = [];
 
 let start = 0;
@@ -33,6 +38,7 @@ for (let i = 0; i < numberOfThreadsWeUse; i++) {
 
 //console.log("valuesForTasks:", valuesForTasks);
 
+//the piece of code for every thread to calculate
 const heavyTask = (start, finish) => {
     let res = 0;
     for (let i = start; i <= finish; i++) {
@@ -42,6 +48,7 @@ const heavyTask = (start, finish) => {
     return res;
 };
 
+//task for every thread as a Promise
 const tasks = [];
 for (let i = 0; i < valuesForTasks.length; i++) {
     const value = valuesForTasks[i];
@@ -51,11 +58,13 @@ for (let i = 0; i < valuesForTasks.length; i++) {
 //console.log("tasks:", tasks);
 
 console.log("Turbo calculating...");
+
+//start solving the problem using multithreading
 Promise.all(tasks)
     .then((result) => {
         //console.log(result);
         const sum = result.reduce((a, b) => a + b);
-        console.log(sum);
+        console.log(sum); //and here is a result
     })
     .catch(function (err) {
         console.error(err);
