@@ -1,24 +1,37 @@
 import workerpool from "workerpool";
-
+import os from "os";
 const pool = workerpool.pool();
 
-const heavyTask = (a, b) => {
+const numberOfThreads = os.cpus().length;
+console.log("numberOfThreads:", numberOfThreads);
+
+const numberOfThreadsWeUse = numberOfThreads - 2;
+
+const initialValue = 10000000000;
+
+const portionPerThread = Math.floor(initialValue / numberOfThreadsWeUse);
+console.log("portionPerThread:", portionPerThread);
+
+const valuesForTasks = [];
+
+for (let i = 0; i < numberOfThreadsWeUse; i++) {
+    const taskValue = [];
+    taskValue[0] = 0;
+}
+
+const heavyTask = (start, finish) => {
     let res = 0;
-    for (let i = 0; i < a; i++) {
-        for (let j = 0; j < b; j++) {
-            const sum = i + j;
-            res = res + sum;
-        }
+    for (let i = start; i < finish; i++) {
+        res = res + i;
     }
 
     return res;
 };
 
-// const res1 = heavyTask(100000, 100000);
+const res1 = heavyTask(0, 10000000000);
 // console.log("res1:", res1);
-// const res2 = heavyTask(100000, 100000);
-// console.log("res1:", res2);
 
+/*
 pool.exec(heavyTask, [100000, 100000])
     .then(function (result) {
         console.log("result1 = ", result);
@@ -29,3 +42,4 @@ pool.exec(heavyTask, [100000, 100000])
     .then(function () {
         pool.terminate(); // terminate all workers when done
     });
+*/
