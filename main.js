@@ -14,7 +14,62 @@ const heavyTask = (a, b) => {
     return res;
 };
 
-const res1 = heavyTask(100000, 100000);
-console.log("res1:", res1);
-const res2 = heavyTask(100000, 100000);
-console.log("res1:", res2);
+// const res1 = heavyTask(100000, 100000);
+// console.log("res1:", res1);
+// const res2 = heavyTask(100000, 100000);
+// console.log("res1:", res2);
+
+pool.exec(heavyTask, [100000, 100000])
+    .then(function (result) {
+        console.log("result1 = ", result);
+    })
+    .catch(function (err) {
+        console.error(err);
+    })
+    .then(function () {
+        pool.terminate(); // terminate all workers when done
+    });
+
+pool.exec(heavyTask, [100000, 100000])
+    .then(function (result) {
+        console.log("result2 = ", result);
+    })
+    .catch(function (err) {
+        console.error(err);
+    })
+    .then(function () {
+        pool.terminate(); // terminate all workers when done
+    });
+
+pool.exec(heavyTask, [100000, 100000])
+    .then(function (result) {
+        console.log("result3 = ", result);
+    })
+    .catch(function (err) {
+        console.error(err);
+    })
+    .then(function () {
+        pool.terminate(); // terminate all workers when done
+    });
+
+pool.exec(heavyTask, [100000, 100000])
+    .then(function (result) {
+        console.log("result4 = ", result);
+    })
+    .catch(function (err) {
+        console.error(err);
+    })
+    .then(function () {
+        pool.terminate(); // terminate all workers when done
+    });
+
+pool.exec(heavyTask, [100000, 100000])
+    .then(function (result) {
+        console.log("result5 = ", result);
+    })
+    .catch(function (err) {
+        console.error(err);
+    })
+    .then(function () {
+        pool.terminate(); // terminate all workers when done
+    });
