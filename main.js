@@ -3,9 +3,10 @@ import os from "os";
 const pool = workerpool.pool();
 
 const numberOfThreads = os.cpus().length;
-console.log("numberOfThreads:", numberOfThreads);
+//console.log("numberOfThreads:", numberOfThreads);
 
 const numberOfThreadsWeUse = numberOfThreads - 2;
+console.log("numberOfThreadsWeUse:", numberOfThreadsWeUse);
 
 const initialValue = 10000000000;
 
@@ -14,10 +15,18 @@ console.log("portionPerThread:", portionPerThread);
 
 const valuesForTasks = [];
 
+let start = 0;
+let finish = portionPerThread;
 for (let i = 0; i < numberOfThreadsWeUse; i++) {
     const taskValue = [];
-    taskValue[0] = 0;
+    taskValue[0] = start;
+    taskValue[1] = finish;
+    start = start + portionPerThread;
+    finish = finish + portionPerThread;
+    valuesForTasks.push(taskValue);
 }
+
+console.log("valuesForTasks:", valuesForTasks);
 
 const heavyTask = (start, finish) => {
     let res = 0;
@@ -28,7 +37,7 @@ const heavyTask = (start, finish) => {
     return res;
 };
 
-const res1 = heavyTask(0, 10000000000);
+// const res1 = heavyTask(0, 10000000000);
 // console.log("res1:", res1);
 
 /*
