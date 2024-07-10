@@ -13,7 +13,7 @@ function loop2() {
     return res;
 }
 
-//this code will run on a single core
+//this code will run on 1 CPU core
 
 //first loop1
 const result1 = loop1();
