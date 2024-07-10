@@ -11,5 +11,10 @@ const heavyTask = (a, b) => {
         }
     }
 
-    console.log(res);
+    return res;
 };
+
+const res1 = heavyTask(100000, 100000);
+console.log("res1:", res1);
+const res2 = heavyTask(100000, 100000);
+console.log("res1:", res2);
