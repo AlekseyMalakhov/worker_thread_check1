@@ -1,2 +1,5 @@
 import { parentPort, workerData } from "worker_threads";
-parentPort.postMessage(workerData.num * workerData.num);
+
+const result = workerData.num * 2;
+
+parentPort.postMessage(result);
