@@ -16,13 +16,23 @@ console.log("portionPerThread:", portionPerThread);
 const valuesForTasks = [];
 
 let start = 0;
-let finish = portionPerThread;
+let finish = portionPerThread - 1;
 for (let i = 0; i < numberOfThreadsWeUse; i++) {
     const taskValue = [];
-    taskValue[0] = start;
-    taskValue[1] = finish;
-    start = start + portionPerThread;
-    finish = finish + portionPerThread;
+    if (i !== numberOfThreadsWeUse - 1) {
+        taskValue[0] = start;
+        taskValue[1] = finish;
+        start = finish + 1;
+        finish = start + portionPerThread - 1;
+        console.log("i = " + i);
+        console.log("taskValue:", taskValue);
+        console.log("__________");
+    } else {
+        taskValue[0] = start;
+        taskValue[1] = initialValue;
+        console.log("i = " + i + " last");
+        console.log("taskValue:", taskValue);
+    }
     valuesForTasks.push(taskValue);
 }
 
