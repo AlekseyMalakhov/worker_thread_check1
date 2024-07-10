@@ -1,11 +1,11 @@
-import { Worker } from "worker_threads";
+import workerpool from "workerpool";
 
-const worker = new Worker("./worker.js", { workerData: { num: 5 } });
+const pool = workerpool.pool();
 
-const heavyTask = () => {
+const heavyTask = (a, b) => {
     let res = 0;
-    for (let i = 0; i < 100000; i++) {
-        for (let j = 0; j < 100000; j++) {
+    for (let i = 0; i < a; i++) {
+        for (let j = 0; j < b; j++) {
             const sum = i + j;
             res = res + sum;
         }
@@ -13,13 +13,3 @@ const heavyTask = () => {
 
     console.log(res);
 };
-
-heavyTask();
-
-worker.on("message", (result) => {
-    console.log("square of 5 is :", result);
-});
-
-worker.on("error", (msg) => {
-    console.log(msg);
-});
